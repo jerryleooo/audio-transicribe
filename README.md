@@ -17,6 +17,8 @@ A full-stack application for transcribing audio files using the Whisper speech r
 - Git
 - Python 3.9+
 - Node.js 18+
+- FFmpeg
+- Make
 
 ### Running the Application
 
