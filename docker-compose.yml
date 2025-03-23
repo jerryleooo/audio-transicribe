@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - sqlite-data:/app/instance
+      - uploads-data:/app/uploads
+    environment:
+      - FLASK_APP=app.main:create_app
+      - FLASK_ENV=production
+      - DATABASE_URL=sqlite:////app/instance/prod.db
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  sqlite-data:
+  uploads-data: 

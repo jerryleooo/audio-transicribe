@@ -1,0 +1,45 @@
+.transcription-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.transcription-list-empty {
+  color: #a0aec0;
+  margin: 1rem 0;
+}
+
+.transcription-item {
+  background-color: #2d3748;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  border: 1px solid #4a5568;
+}
+
+.transcription-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.transcription-text {
+  color: #cbd5e0;
+  margin-top: 0.5rem;
+}
+
+.transcription-date {
+  color: #718096;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .transcription-item {
+    padding: 0.75rem;
+  }
+  
+  .transcription-title {
+    font-size: 1.125rem;
+  }
+} 

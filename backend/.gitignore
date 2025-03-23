@@ -1,0 +1,47 @@
+# Python specific backend ignores
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# Backend specific data and uploads
+uploads/*
+!uploads/.gitkeep
+*.db
+*.sqlite
+*.sqlite3
+
+# Backend specific cache
+.cache/
+.whisper/
+
+# Local development
+.env
+.env.local
+
+*.swp
+*.swn
+*.DS_Store
+.metals
+projects
+goProjects
+node_modules
+target
+thirdparty
+logAnalysis/sql
+logAnalysis/download
+logAnalysis/results
+logAnalysis/final
+dirDigestMap.json
+.gradle
+.idea
+data/*
+*.pyc
+*.log
