@@ -10,7 +10,7 @@ from app.database import db
 
 @pytest.fixture
 def app():
-    app = create_app('testing')  # 使用预定义的测试配置
+    app = create_app('testing')
     
     # Create the database and load test data
     with app.app_context():

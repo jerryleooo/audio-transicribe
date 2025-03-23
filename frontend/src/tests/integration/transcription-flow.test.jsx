@@ -52,4 +52,22 @@ describe('Transcription Flow', () => {
     
     expect(screen.getByText('This is a test transcription')).toBeInTheDocument();
   });
+
+  test('uploadFiles should handle file upload correctly', async () => {
+    const mockFile = new File(['dummy content'], 'test.mp3', { type: 'audio/mp3' });
+    const mockResponse = { id: 1, filename: 'test.mp3', text: 'Hello world' };
+    
+    api.uploadFiles.mockResolvedValueOnce(mockResponse);
+    
+    const result = await api.uploadFiles([mockFile]);
+    expect(result).toEqual(mockResponse);
+  });
+
+  test('app shows error message when API fails', async () => {
+    api.fetchTranscriptions.mockRejectedValue(new Error('Network error'));
+    render(<App />);
+    await waitFor(() => {
+      expect(screen.getByText(/error/i)).toBeInTheDocument();
+    });
+  });
 }); 
