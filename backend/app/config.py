@@ -1,14 +1,14 @@
 import os
 import logging
-from pathlib import Path
+import pathlib
 
-# Get project root directory
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Get the absolute path to the project root directory
+basedir = pathlib.Path(__file__).parent.parent.absolute()
 
 class Config:
     """Base configuration."""
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
-    UPLOAD_FOLDER = os.path.join(os.path.dirname(BASE_DIR), 'uploads')
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-key-for-development')
+    UPLOAD_FOLDER = os.path.join(basedir, 'uploads')
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16 MB max upload size
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
@@ -26,9 +26,9 @@ class DevelopmentConfig(Config):
     def init_app(app):
         Config.init_app(app)
         
-        # Set database URI with absolute path
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or \
-            f'sqlite:////app/instance/dev.db'
+        # Use relative path for local development
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DEV_DATABASE_URL') or \
+            f'sqlite:///{os.path.join(basedir, "instance", "dev.db")}'
         
         # Log to stderr
         console_handler = logging.StreamHandler()
@@ -38,7 +38,8 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     """Testing configuration."""
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
+        'sqlite:///:memory:'
     UPLOAD_FOLDER = '/tmp/test_uploads'
     
     @staticmethod
@@ -52,9 +53,9 @@ class ProductionConfig(Config):
     def init_app(app):
         Config.init_app(app)
         
-        # Set database URI with absolute path
+        # Use absolute path for Docker environment
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or \
-            f'sqlite:////app/instance/prod.db'
+            'sqlite:////app/instance/prod.db'
 
 # Configuration dictionary
 config = {

@@ -73,6 +73,9 @@ def create_app(config_name=None):
     
     # Initialize database on startup
     with app.app_context():
+        app.logger.info(f"Database path: {app.config['SQLALCHEMY_DATABASE_URI']}")
+        app.logger.info(f"Instance path: {app.instance_path}")
+        app.logger.info(f"Upload folder: {app.config['UPLOAD_FOLDER']}")
         db.create_all()
         app.logger.info("Database tables created (if they didn't exist)")
     
